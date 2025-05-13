@@ -1,0 +1,16 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    prefer-ip-address: true
+
+spring:
+  datasource:
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: jdbc:sqlserver://172.16.72.212:1433;databaseName=DATA_PROSHOP;encrypt=false;trustServerCertificate=true;
+    username: sa
+    password: dev*2304
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/AlvaDB
