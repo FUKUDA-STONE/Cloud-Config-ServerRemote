@@ -1,3 +1,11 @@
+api-service:
+  url: http://api-service:8771
+core-service:
+  url: http://core-service:8762
+mp-import-service:
+  url: http://localhost:12120/MPImport
+
+
 eureka:
   client:
     serviceUrl:

@@ -1,0 +1,27 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://discovery-server:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  datasource:
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: jdbc:sqlserver://sql-server:1433;databaseName=PRODUCTION;encrypt=false;trustServerCertificate=true;
+    username: sa
+    password: dev*2304
+  redis:
+    time-to-live: 60000
+    host: redis-server
+    port: 6379
+  cache:
+    type: redis
+
+server:
+  port: 8771
+swagger:
+  enabled: true

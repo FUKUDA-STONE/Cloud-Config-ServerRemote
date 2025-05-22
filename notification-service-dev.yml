@@ -1,10 +1,10 @@
 core-service:
   url: http://core-service:8762
-
+  
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://discovery-server:8761/eureka
   instance:
     prefer-ip-address: true
 server:
@@ -33,7 +33,7 @@ spring:
           starttls:
             enable: true
   kafka:
-    bootstrap-servers: localhost:19092
+    bootstrap-servers: kafka:19092
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
@@ -49,11 +49,11 @@ spring:
       matching-strategy: ant_path_matcher
   datasource:
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-    url: jdbc:sqlserver://172.16.72.212:1433;databaseName=PRODUCTION;encrypt=false;trustServerCertificate=true;
+    url: jdbc:sqlserver://sql-server:1433;databaseName=PRODUCTION;encrypt=false;trustServerCertificate=true;
     username: sa
     password: dev*2304
   redis:
-    host: localhost
+    host: redis-server
     port: 6379
     timeout: 60000  # Timeout kết nối Redis (60 giây)
     lettuce:

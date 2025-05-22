@@ -1,22 +1,39 @@
+api-service:
+  url: http://api-service:8771
+core-service:
+  url: http://core-service:8762
+mp-import-service:
+  url: http://localhost:12120/MPImport
+
+
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://discovery-server:8761/eureka
   instance:
     prefer-ip-address: true
 
+
 server:
-  port: 8090
+  port: 8767
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000   # Thời gian chờ kết nối (ms)
+        readTimeout: 5000      # Thời gian chờ đọc dữ liệu (ms)
+        loggerLevel: FULL      # Log chi tiết request & response
 
 spring:
   datasource:
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-    url: jdbc:sqlserver://172.16.72.212:1433;databaseName=PRODUCTION;encrypt=false;trustServerCertificate=true;
+    url: jdbc:sqlserver://sql-server:1433;databaseName=PRODUCTION;encrypt=false;trustServerCertificate=true;
     username: sa
     password: dev*2304
   data:
     mongodb:
-      uri: mongodb://localhost:27017/AlvaDB
+      uri: mongodb://mongodb:27017/AlvaDB
   servlet:
     # Giới hạn kích thước file tải lên
     multipart:
@@ -32,9 +49,10 @@ spring:
     pathmatch:
       matching-strategy: ant_path_matcher
 
+
   redis:
     time-to-live: 60000
-    host: localhost
+    host: redis-server
     port: 6379
   cache:
     type: redis
