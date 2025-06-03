@@ -5,6 +5,10 @@ eureka:
   instance:
     prefer-ip-address: true
 
+
+server:
+  port: 8096
+
 logging:
   level:
     reactor:
@@ -121,8 +125,7 @@ spring:
           uri: http://discovery-server:8761
           predicates: Path=/eureka/**
 
-server:
-  port: 8096
+
 
 auth:
   service:
