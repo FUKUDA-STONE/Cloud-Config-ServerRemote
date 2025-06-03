@@ -1,0 +1,129 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
+logging:
+  level:
+    reactor:
+      netty: INFO
+    org:
+      springframework:
+        cloud:
+          gateway: TRACE
+
+spring:
+  redis:
+    host: localhost
+    port: 6379
+  application:
+    name: api-gateway
+  cloud:
+    discovery:
+      locator:
+        enabled: true
+    gateway:
+      globalcors:
+        cors-configurations:
+          "[/**]":
+            allowedOrigins: "*"
+            allowedHeaders: "*"
+            allowedMethods: "*"
+      routes:
+        #config for swagger
+        - id: core-service
+          uri: lb://core-service
+          predicates: Path=/api/core/**
+          filters:
+            - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+            - AuthenticationFilter
+            - StripPrefix= 2
+
+        - id: po-service
+          uri: lb://po-service
+          predicates: Path=/api/po/**
+          filters:
+            - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+            - AuthenticationFilter
+            - StripPrefix= 2
+
+        - id: api-service
+          uri: lb://api-service
+          predicates: Path=/api/api/**
+          filters:
+            - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+            - AuthenticationFilter
+            - StripPrefix= 2
+
+        - id: api-proshop
+          uri: lb://api-proshop
+          predicates: Path=/api/proshop/**
+          filters:
+            - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+            - AuthenticationFilter
+            - StripPrefix= 2
+
+        - id: 3d-service
+          uri: lb://3d-service
+          predicates: Path=/api/3d/**
+          filters:
+            - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+            - AuthenticationFilter
+            - StripPrefix= 2
+
+        - id: 2d-service
+          uri: lb://2d-service
+          predicates: Path=/api/2d/**
+          filters:
+            - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+            - AuthenticationFilter
+            - StripPrefix= 2
+
+        - id: fair-service
+          uri: lb://fair-service
+          predicates: Path=/api/fair/**
+          filters:
+            - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+            - AuthenticationFilter
+            - StripPrefix= 2
+
+        - id: notification-service
+          uri: lb://notification-service
+          predicates: Path=/api/notification/**
+          filters:
+            - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+            - AuthenticationFilter
+            - StripPrefix= 2
+
+        - id: PYTHON-2D-SERVICE
+          uri: lb://PYTHON-2D-SERVICE
+          predicates: Path=/api/python/**
+          filters:
+            - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+            - AuthenticationFilter
+            - StripPrefix= 2
+            - AddRequestHeader=Authorization, Bearer #{exchange.attributes.token}
+
+        - id: discovery-server
+          uri: http://discovery-server:8761
+          predicates: Path=/eureka/web
+          filters: SetPath=/
+
+        - id: identity-service
+          uri: lb://identity-service
+          predicates: Path=/api/auth/**
+          filters:
+            - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+
+        - id: discovery-server-static
+          uri: http://discovery-server:8761
+          predicates: Path=/eureka/**
+
+server:
+  port: 8096
+
+auth:
+  service:
+    url: http://localhost:8764
